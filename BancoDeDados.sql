@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06-Out-2022 às 16:50
--- Versão do servidor: 10.4.24-MariaDB
--- versão do PHP: 7.4.29
+-- Tempo de geração: 09-Out-2022 às 00:48
+-- Versão do servidor: 8.0.29
+-- versão do PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,25 +26,24 @@ SET time_zone = "+00:00";
 --
 -- Estrutura da tabela `cliente`
 --
-
 CREATE DATABASE trabalho;
 use trabalho;
 
 CREATE TABLE `cliente` (
-  `Id` int(11) NOT NULL,
+  `Id` int NOT NULL,
   `Nome` varchar(100) NOT NULL,
   `Telefone` varchar(35) NOT NULL,
   `Email` varchar(50) NOT NULL,
-  `Excluido` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Excluido` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `cliente`
 --
 
 INSERT INTO `cliente` (`Id`, `Nome`, `Telefone`, `Email`, `Excluido`) VALUES
-(15, 'Maciel1', '14999064595', 'maciel@gmail.com', 1),
-(16, 'Maciel Rodrigues', '14999064595', 'maciel@gmail.com', 1),
+(15, 'Maciel1', '14999064595', 'maciel@gmail.com', 0),
+(16, 'Maciel Rodrigues', '14999064595', 'maciel@gmail.com', 0),
 (17, 'Juan Carlos', '14999055445', 'juan@gmail.com', 0),
 (18, 'Maciel', '149974554', 'maaciel123@gmail.com', 0);
 
@@ -55,13 +54,23 @@ INSERT INTO `cliente` (`Id`, `Nome`, `Telefone`, `Email`, `Excluido`) VALUES
 --
 
 CREATE TABLE `itempedido` (
-  `Id` int(11) NOT NULL,
-  `IdPedido` int(11) NOT NULL,
-  `IdProduto` int(11) NOT NULL,
+  `Id` int NOT NULL,
+  `IdPedido` int NOT NULL,
+  `IdProduto` int NOT NULL,
   `ValorUnitario` decimal(10,0) NOT NULL,
-  `Qtd` int(11) NOT NULL,
-  `Excluido` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Qtd` int NOT NULL,
+  `Excluido` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `itempedido`
+--
+
+INSERT INTO `itempedido` (`Id`, `IdPedido`, `IdProduto`, `ValorUnitario`, `Qtd`, `Excluido`) VALUES
+(0, 1, 1, '13', 2, 0),
+(1, 1, 2, '14', 3, 0),
+(2, 1, 3, '15', 4, 0),
+(3, 1, 4, '16', 5, 0);
 
 -- --------------------------------------------------------
 
@@ -70,11 +79,20 @@ CREATE TABLE `itempedido` (
 --
 
 CREATE TABLE `pedido` (
-  `Id` int(11) NOT NULL,
-  `IdCliente` int(11) NOT NULL,
-  `Total` decimal(10,0) NOT NULL,
-  `Excluido` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Id` int NOT NULL,
+  `IdCliente` int NOT NULL,
+  `Total` decimal(10,0) DEFAULT NULL,
+  `Excluido` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `pedido`
+--
+
+INSERT INTO `pedido` (`Id`, `IdCliente`, `Total`, `Excluido`) VALUES
+(1, 15, '50', 0),
+(2, 16, '28', 0),
+(3, 17, '38', 0);
 
 -- --------------------------------------------------------
 
@@ -83,12 +101,12 @@ CREATE TABLE `pedido` (
 --
 
 CREATE TABLE `produto` (
-  `Id` int(11) NOT NULL,
+  `Id` int NOT NULL,
   `Nome` varchar(50) NOT NULL,
   `Descricao` text NOT NULL,
   `Preco` float NOT NULL,
-  `Excluido` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Excluido` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Extraindo dados da tabela `produto`
@@ -96,7 +114,7 @@ CREATE TABLE `produto` (
 
 INSERT INTO `produto` (`Id`, `Nome`, `Descricao`, `Preco`, `Excluido`) VALUES
 (1, 'Arroz', 'Arroz Para Feijoada 1kg', 11, 0),
-(2, 'TESTE', 'TESTE ', 5, 1),
+(2, 'sabão em po', 'cheiro de coco', 5, 0),
 (3, 'Feijão', 'Feijão Normal', 4, 0),
 (4, 'Carne Vermelha', 'Carne de Boi', 100, 0);
 
@@ -108,6 +126,12 @@ INSERT INTO `produto` (`Id`, `Nome`, `Descricao`, `Preco`, `Excluido`) VALUES
 -- Índices para tabela `cliente`
 --
 ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- Índices para tabela `itempedido`
+--
+ALTER TABLE `itempedido`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -130,19 +154,25 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de tabela `itempedido`
+--
+ALTER TABLE `itempedido`
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
