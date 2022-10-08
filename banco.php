@@ -2,7 +2,7 @@
       //Credenciais para conexão com o Banco
       $dbhost = 'localhost:3306';
       $dbuser = 'root';
-      $dbpass = '';
+      $dbpass = 'root';
       $dbname = 'trabalho';
       
       //Abre conexão com o MySQL   
