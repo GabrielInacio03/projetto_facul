@@ -20,13 +20,13 @@ require_once 'Templates/header.php';
 
 
         ?>
-        <form method="post" id="formCadastro" class="row g-3">
+        <form action="Funcoes/salvarPedido.php" method="post" id="formCadastro" class="row g-3">
           <div class="form-group">
             <input type="hidden" name="id" value="<?php if (isset($_SESSION["form"]["Id"])) echo $_SESSION["form"]["Id"]; ?>" class="form-control">
           </div>
           <div id="divCliente" class="col-md-12">
             <label>Cliente</label>
-            <select class="form-select" aria-label="Default select example" name="clientes" id="">
+            <select class="form-select" aria-label="Default select example" name="clientes" id="slctCliente">
               <?php
               require_once 'banco.php';
               $sql = 'SELECT * FROM Cliente WHERE Excluido = 0';
@@ -34,27 +34,28 @@ require_once 'Templates/header.php';
 
               if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                  echo '<option>' . $row['Nome'] . '</option>';
+                  echo "<option value=\"{$row['Id']}\">{$row['Nome']}</option>";
                 }
               }
               ?>
             </select>
           </div>
-          
+
           <button class="btn btn-primary" id="btnNovoProduto" type="button">Adicionar produto</button>
-          <button type="submit" class="btn btn-success btn-sm">Salvar</button>
+          <button  id="btnSalvar" class="btn btn-success btn-sm" type="button">Salvar</button>
         </form>
       </div>
       <div class=" col-md-3"></div>
     </div>
   </div>
 </main>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script type="text/javascript">
   <?php
   require_once 'banco.php';
   $sql = 'SELECT * FROM Produto WHERE Excluido = 0';
   $result = mysqli_query($conn, $sql); //A query seleciona as linhas da Tabela
-  echo 'var produtos = [';
+  echo 'let produtos = [';
   if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
       echo "{id: {$row['Id']} , nome: '{$row['Nome']}'} ,"; //``;
@@ -71,43 +72,67 @@ require_once 'Templates/header.php';
     $('#formCadastro').on("click", ".excluir", function() {
       //$(this).closest('.PedidoItem').remove(); 
       console.log("dsfdf");
-      $(this).closest('.PedidoItem').empty(); 
+      $(this).closest('.PedidoItem').empty();
     });
 
-    $('.PedidoItem').on('click', '.excluir', function () {
-      console.log("caiu no segundo exemplo");
-      $(this).remove(); 
+
+    $('#btnSalvar').click(function() {
+
+      let arrayitens = [];
+      $('.slctProduto').each(function(i, obj) {
+        let select = JSON.parse($(obj).find(":selected").attr("data-value"));
+        let qtd = $(obj).closest('.PedidoItem').children('.divQtd').children('input').val(); 
+        let item = { prodId: select.id, valorUn: select.valorUn, prodQtd: qtd };
+        arrayitens.push(item);
+      });
+      
+      console.log(arrayitens);
+
+      // $.post("Funcoes/salvarPedido.php", {
+      //     clienteId: $('#slctCliente').val(),
+      //     arrayProdutos: [{ prodId: 1, prodQtd: 1 }, { prodId: 3, prodQtd: 2 }]
+        
+      //   // function(data, status) {
+      //   //   location.reload();
+      //   //   console.log("Data: " + data + "\n Status: " + status);
+      //   //   alert("Status: " + status);
+      //   }).done(function( data ) {
+      //     console.log(data);
+      //   }).fail(function( data ) {
+      //     console.log(data);
+      //   }); 
+
     });
-    
-    $('.collection').on('click', '.material-icons', function () {
-      console.log("aaaaaaaa");
-      $(this).closest('.collection-item').remove(); 
-    });
+
+
+
+
   });
-  
-  function NovoItem() { 
-    var itemPedido = `
-      <div class="row PedidoItem">
-        <div class="col-lg-7 col-md-7">
-          <label>Produto</label>
-          <select class="form-select" aria-label="Default select example" name="produto" id="">
-            <?php
-              require_once 'banco.php';
-              $sql = 'SELECT * FROM Produto WHERE Excluido = 0';
-              $result = mysqli_query($conn, $sql); //A query seleciona as linhas da Tabela
 
-              if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                  echo "<option value=\"{$row['Id']}\"> {$row['Nome']}</option>";
-                }
+  function NovoItem() {
+    let random = Math.floor((Math.random() * 1000) +1 );
+    let itemPedido = `
+      <div class="row PedidoItem">
+        <div class="col-lg-7 col-md-7 divProd">
+          <label>Produto</label>
+          <select class="form-select slctProduto" aria-label="Default select example" name="produto${random}" id="produto${random}">
+            <?php
+            require_once 'banco.php';
+            $sql = 'SELECT * FROM Produto WHERE Excluido = 0';
+            $result = mysqli_query($conn, $sql); //A query seleciona as linhas da Tabela
+
+            if (mysqli_num_rows($result) > 0) {
+              while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option data-value='{\"id\": {$row['Id']}, \"valorUn\": {$row['Preco']}}'> {$row['Nome']}</option>";
               }
+            }
             ?>
           </select>
         </div>
-        <div class="col-lg-4 col-md-4">
+        <div class="col-lg-4 col-md-4 divQtd">
           <br>
           <label>Quantidade</label>
-          <input name="" id="" type="number" value="0">
+          <input name="qtd${random}" id="qtd${random}" type="number" value="0"  min="1" >
         </div>
         <div class="col-lg-1 col-md-1">
           <br>
