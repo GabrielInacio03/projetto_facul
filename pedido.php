@@ -9,7 +9,7 @@
     <h1 class="mt-2">Listagem de Pedidos</h1>
     <?php
         require_once 'banco.php';
-        $sql = 'SELECT * FROM pedido
+        $sql = 'SELECT pedido.id, cliente.nome, pedido.total FROM pedido
         inner join cliente on
         cliente.id = pedido.IdCliente
         WHERE pedido.Excluido = 0';
@@ -26,14 +26,14 @@
             echo '        <th class="info"></th>';
             echo '      </tr>';
             echo '    </thead>';
-            echo '    <tbody>';
+            echo '    <tbody>'; 
             while ($row = mysqli_fetch_assoc($result)){
               echo '<tr>'; 
-              echo '  <td>'.$row['Id'].'</td>';
-              echo '  <td>'.$row['Nome'].'</td>';
-              echo '  <td>'.$row['Total'].'</td>'; 
-              echo	'	<td>	<a	href="editarProduto.php?id='.$row['Id'].'"	class="btn	btn-info	btn-sm">Editar</a>
-              <a	href="Funcoes/excluirProduto.php?id='.$row['Id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
+              echo '  <td>'.$row['id'].'</td>';
+              echo '  <td>'.$row['nome'].'</td>';
+              echo '  <td>'.$row['total'].'</td>'; 
+              echo	'	<td>	<a	href="editarProduto.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Editar</a>
+              <a	href="Funcoes/excluirProduto.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
               echo '</tr>';
     
             }
