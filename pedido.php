@@ -32,8 +32,8 @@
               echo '  <td>'.$row['id'].'</td>';
               echo '  <td>'.$row['nome'].'</td>';
               echo '  <td>'.$row['total'].'</td>'; 
-              echo	'	<td>	<a	href="editarProduto.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Editar</a>
-              <a	href="Funcoes/excluirProduto.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
+              echo	'	<td>	<a	href="editarPedido.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Editar</a>
+              <a	href="Funcoes/excluirPedido.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
               echo '</tr>';
     
             }
@@ -48,5 +48,15 @@
 
   </div>
 </main>
+
+<script type="text/javascript">
+ $('#formCadastro').on("click", ".excluir", function() {
+      //$(this).closest('.PedidoItem').remove(); 
+      console.log("dsfdf");
+      $(this).closest('.PedidoItem').empty();
+    });
+</script>
+
 <?php
 require_once 'Templates/footer.php';
+?>
