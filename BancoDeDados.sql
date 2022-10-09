@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Out-2022 às 00:48
+-- Tempo de geração: 10-Out-2022 às 01:49
 -- Versão do servidor: 8.0.29
 -- versão do PHP: 8.1.6
 
@@ -20,14 +20,14 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `trabalho`
 --
+CREATE DATABASE IF NOT EXISTS `trabalho` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `trabalho`;
 
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `cliente`
 --
-CREATE DATABASE trabalho;
-use trabalho;
 
 CREATE TABLE `cliente` (
   `Id` int NOT NULL,
@@ -42,10 +42,10 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`Id`, `Nome`, `Telefone`, `Email`, `Excluido`) VALUES
-(15, 'Maciel1', '14999064595', 'maciel@gmail.com', 0),
-(16, 'Maciel Rodrigues', '14999064595', 'maciel@gmail.com', 0),
-(17, 'Juan Carlos', '14999055445', 'juan@gmail.com', 0),
-(18, 'Maciel', '149974554', 'maaciel123@gmail.com', 0);
+(15, 'Ferreira', '14999064595', 'maciel@gmail.com', 0),
+(16, 'Michael jackson', '14999064595', 'maciel@gmail.com', 0),
+(17, 'Oscar', '14999055445', 'juan@gmail.com', 0),
+(18, 'Erick', '149974554', 'maaciel123@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -67,10 +67,9 @@ CREATE TABLE `itempedido` (
 --
 
 INSERT INTO `itempedido` (`Id`, `IdPedido`, `IdProduto`, `ValorUnitario`, `Qtd`, `Excluido`) VALUES
-(0, 1, 1, '13', 2, 0),
-(1, 1, 2, '14', 3, 0),
-(2, 1, 3, '15', 4, 0),
-(3, 1, 4, '16', 5, 0);
+(47, 16, 1, '2', 1, 0),
+(48, 16, 2, '4', 2, 0),
+(49, 16, 1, '5', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -90,9 +89,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`Id`, `IdCliente`, `Total`, `Excluido`) VALUES
-(1, 15, '50', 0),
-(2, 16, '28', 0),
-(3, 17, '38', 0);
+(16, 15, '12', 0);
 
 -- --------------------------------------------------------
 
@@ -160,13 +157,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `itempedido`
 --
 ALTER TABLE `itempedido`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
