@@ -58,7 +58,7 @@ foreach ($dadosform['arrayProdutos'] as $arr) {
   $conn->query($sql);
 }
 
-$sql = "SELECT SUM(Qtd) as Total FROM trabalho.itempedido where idPedido = $pedidoId";
+$sql = "SELECT SUM(ValorUnitario*Qtd) as Total FROM trabalho.itempedido where idPedido = $pedidoId";
 
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
