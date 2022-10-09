@@ -6,7 +6,7 @@
       $dbname = 'trabalho';
       
       //Abre conexão com o MySQL   
-      $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
+      $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
    
       if(!$conn ){
         die('Falha ao conectar com o MySQL: ' . mysqli_connect_error());

@@ -78,29 +78,34 @@ require_once 'Templates/header.php';
 
     $('#btnSalvar').click(function() {
 
-      let arrayitens = [];
-      $('.slctProduto').each(function(i, obj) {
-        let select = JSON.parse($(obj).find(":selected").attr("data-value"));
-        let qtd = $(obj).closest('.PedidoItem').children('.divQtd').children('input').val(); 
-        let item = { prodId: select.id, valorUn: select.valorUn, prodQtd: qtd };
-        arrayitens.push(item);
-      });
-      
-      console.log(arrayitens);
+      if($('#formCadastro').valid()){
 
-      // $.post("Funcoes/salvarPedido.php", {
-      //     clienteId: $('#slctCliente').val(),
-      //     arrayProdutos: [{ prodId: 1, prodQtd: 1 }, { prodId: 3, prodQtd: 2 }]
+        let arrayitens = [];
+        $('.slctProduto').each(function(i, obj) {
+          let select = JSON.parse($(obj).find(":selected").attr("data-value"));
+          let qtd = $(obj).closest('.PedidoItem').children('.divQtd').children('input').val(); 
+          let item = { prodId: select.id, valorUn: select.valorUn, prodQtd: qtd };
+          arrayitens.push(item);
+        });
+ 
+        $.post("Funcoes/salvarPedido.php", {
+            clienteId: $('#slctCliente').val(),
+            arrayProdutos: arrayitens
+          
+          // function(data, status) {
+          //   location.reload();
+          //   console.log("Data: " + data + "\n Status: " + status);
+          //   alert("Status: " + status);
+          }).done(function( data ) {
+            console.log(data);
+            alert("Pedido Registrado!");
+            $('.PedidoItem').remove();
+          }).fail(function( data ) {
+            alert(data.statusText);
+          }); 
+
+      }
         
-      //   // function(data, status) {
-      //   //   location.reload();
-      //   //   console.log("Data: " + data + "\n Status: " + status);
-      //   //   alert("Status: " + status);
-      //   }).done(function( data ) {
-      //     console.log(data);
-      //   }).fail(function( data ) {
-      //     console.log(data);
-      //   }); 
 
     });
 
@@ -140,7 +145,8 @@ require_once 'Templates/header.php';
         </div>
       </div>
     `;
-    $('#divCliente').append(itemPedido);
+    // $('#divCliente').append(itemPedido);
+    $('#divCliente').after(itemPedido);
   }
 
   console.log(produtos);
