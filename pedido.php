@@ -6,10 +6,13 @@
     <br>
     <a href="cadastrarPedido.php" class="btn btn-success">Novo</a>
     <br>
-    <h1 class="mt-2">Listagem de Produtos</h1>
+    <h1 class="mt-2">Listagem de Pedidos</h1>
     <?php
         require_once 'banco.php';
-        $sql = 'SELECT * FROM Produto WHERE Excluido = 0';
+        $sql = 'SELECT pedido.id, cliente.nome, pedido.total FROM pedido
+        inner join cliente on
+        cliente.id = pedido.IdCliente
+        WHERE pedido.Excluido = 0';
         $result = mysqli_query($conn, $sql); //A query seleciona as linhas da Tabela
         
         if (mysqli_num_rows($result) > 0) {
@@ -17,22 +20,20 @@
             echo '  <table class="table table-bordered table-hover table-sm">';
             echo '    <thead >';
             echo '      <tr style="background-color: #bee5eb;">';
-            echo '        <th class="info">Id</th>';
-            echo '        <th class="info">Nome</th>';
-            echo '        <th class="info">Descrição</th>';
-            echo '        <th class="info">Preço</th>'; 
+            echo '        <th class="info">Id do Pedido</th>';
+            echo '        <th class="info">Nome do Cliente</th>';
+            echo '        <th class="info">Total</th>';  
             echo '        <th class="info"></th>';
             echo '      </tr>';
             echo '    </thead>';
-            echo '    <tbody>';
+            echo '    <tbody>'; 
             while ($row = mysqli_fetch_assoc($result)){
               echo '<tr>'; 
-              echo '  <td>'.$row['Id'].'</td>';
-              echo '  <td>'.$row['Nome'].'</td>';
-              echo '  <td>'.$row['Descricao'].'</td>';
-              echo '  <td>R$'.$row['Preco'].'</td>';
-              echo	'	<td>	<a	href="editarProduto.php?id='.$row['Id'].'"	class="btn	btn-info	btn-sm">Editar</a>
-              <a	href="Funcoes/excluirProduto.php?id='.$row['Id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
+              echo '  <td>'.$row['id'].'</td>';
+              echo '  <td>'.$row['nome'].'</td>';
+              echo '  <td>'.$row['total'].'</td>'; 
+              echo	'	<td>	<a	href="cadastrarPedido.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Editar</a>
+              <a	href="Funcoes/excluirPedido.php?id='.$row['id'].'"	class="btn	btn-info	btn-sm">Excluir</a>';              
               echo '</tr>';
     
             }
@@ -47,5 +48,15 @@
 
   </div>
 </main>
+
+<!-- <script type="text/javascript">
+ $('#formCadastro').on("click", ".excluir", function() {
+      //$(this).closest('.PedidoItem').remove(); 
+      console.log("dsfdf");
+      $(this).closest('.PedidoItem').empty();
+    });
+</script> -->
+
 <?php
 require_once 'Templates/footer.php';
+?>

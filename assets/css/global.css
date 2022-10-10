@@ -1,4 +1,4 @@
-*,*:after,*:before{
+/* *,*:after,*:before{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
@@ -32,4 +32,9 @@ label{
 .vscomp-toggle-button{
 	padding: 10px 30px 10px 10px;
 	border-radius: 5px;
+} */
+
+.error{
+	color: red;
+	font-weight: bold;
 }

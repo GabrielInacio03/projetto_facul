@@ -14,6 +14,6 @@
 
   header("Location:../cliente.php");
 
- 
+?>
 
 

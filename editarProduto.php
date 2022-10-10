@@ -8,7 +8,7 @@
 
   require_once 'banco.php';
 
-  $sql = "SELECT * FROM Produto WHERE id={$idproduto}";
+  $sql = "SELECT * FROM pedido WHERE id={$idproduto}";
   $result = mysqli_query($conn, $sql); //A query seleciona as linhas da Tabela
 
   if(mysqli_affected_rows($conn) != 1){ 
